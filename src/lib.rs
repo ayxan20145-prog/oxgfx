@@ -90,6 +90,11 @@ impl Window {
 
         self.canvas.copy(&texture, None, rect).unwrap();
     }
+    pub fn draw_line(&mut self, x1: i32, x2: i32, y1: i32, y2: i32, color: Color) {
+        self.canvas.set_draw_color(color);
+
+        self.canvas.draw_line((x1, y1), (x2, y2)).unwrap();
+    }
     pub fn present(&mut self) {
         self.canvas.present();
     }
