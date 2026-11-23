@@ -95,6 +95,11 @@ impl Window {
 
         self.canvas.draw_line((x1, y1), (x2, y2)).unwrap();
     }
+    pub fn draw_point(&mut self, x: i32, y: i32, color: Color) {
+        self.canvas.set_draw_color(color);
+
+        self.canvas.draw_point((x, y)).unwrap();
+    }
     pub fn present(&mut self) {
         self.canvas.present();
     }
