@@ -2,6 +2,7 @@ use sdl3::{
     EventPump, Sdl, event::Event, init, keyboard::Keycode, pixels::Color, rect::Rect,
     render::Canvas, ttf, video,
 };
+use std::ops::{Add, Div, Mul, Sub};
 
 pub struct Input {
     pub keys: Vec<Keycode>,
@@ -102,5 +103,55 @@ impl Window {
     }
     pub fn present(&mut self) {
         self.canvas.present();
+    }
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct Vector2 {
+    pub x: f32,
+    pub y: f32,
+}
+
+impl Vector2 {
+    pub fn new(x: f32, y: f32) -> Self {
+        Self { x, y }
+    }
+    pub fn length(&self) -> f32 {
+        (self.x * self.x + self.y * self.y).sqrt()
+    }
+    pub fn distance(&self, other: Self) -> f32 {
+        (self.clone() - other).length()
+    }
+}
+
+impl Add for Vector2 {
+    type Output = Self;
+
+    fn add(self, rhs: Self) -> Self::Output {
+        Self::new(self.x + rhs.x, self.y + rhs.y)
+    }
+}
+
+impl Sub for Vector2 {
+    type Output = Self;
+
+    fn sub(self, rhs: Self) -> Self::Output {
+        Self::new(self.x - rhs.x, self.y - rhs.y)
+    }
+}
+
+impl Mul<f32> for Vector2 {
+    type Output = Self;
+
+    fn mul(self, rhs: f32) -> Self::Output {
+        Self::new(self.x * rhs, self.y * rhs)
+    }
+}
+
+impl Div<f32> for Vector2 {
+    type Output = Self;
+
+    fn div(self, rhs: f32) -> Self::Output {
+        Self::new(self.x / rhs, self.y / rhs)
     }
 }
